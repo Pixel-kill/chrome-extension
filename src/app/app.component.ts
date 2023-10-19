@@ -10,8 +10,9 @@ type Estado = "success" | "error" | 'Restart';
 export class AppComponent {
   secretKey = "F5NMIGrCoz28";
   form : FormGroup;
-
   status: Estado = 'Restart';
+  someObject: any;
+  isCopied: boolean = false;
 
   constructor(    
     private formBuilder: FormBuilder
@@ -27,12 +28,25 @@ export class AppComponent {
     try {
       let result = JSON.parse(plaintext)
       this.form.reset();
-      result ? this.status = 'success' : this.status = 'error'
-      console.log(result)
+      this.someObject = result      
+      this.status = 'success'      
     } catch (error) {
       this.form.reset();
-      plaintext ? this.status = 'success' : this.status = 'error'
-      console.log(plaintext);
+      this.someObject = plaintext
+      this.status = 'error'
     }
+  }
+
+  copyToClipboard() {
+    navigator.clipboard.writeText(JSON.stringify(this.someObject))
+      .then(() => {
+        this.isCopied = true;
+        setTimeout(() => {
+          this.isCopied = false
+        }, 800);
+      })
+      .catch(err => {
+        console.error('Error al copiar al portapapeles: ' + err);
+      });
   }
 }

@@ -1,14 +1,43 @@
-<form [formGroup]="form" (ngSubmit)="submitForm()">
-  <label for="value">Decodificar</label>
-  <div class="content">
-    <div class="value">
-      <input type="text" formControlName="value" placeholder="Valor a Decodificar">
-      <img src="../assets/success.png" alt="failed" width="25" height="25" *ngIf="status === 'success'">
-      <img src="../assets/error.png" alt="success" width="25" height="25" *ngIf="status === 'error'">  
+<div class="container">
+  <form [formGroup]="form" (ngSubmit)="submitForm()">
+    <label for="value" (click)="copyToClipboard()">Decodificar</label>
+    <div class="content">
+      <div class="value">
+        <input
+          type="text"
+          formControlName="value"
+          placeholder="Valor a Decodificar"
+        />
+        <img
+          src="../assets/success.png"
+          alt="failed"
+          width="25"
+          height="25"
+          *ngIf="status === 'success'"
+        />
+        <img
+          src="../assets/error.png"
+          alt="success"
+          width="25"
+          height="25"
+          *ngIf="status === 'error'"
+        />
+      </div>
+      <p *ngIf="status === 'error'">* No es Valido</p>
     </div>
-    <p *ngIf="status === 'error'">* No es Valido</p>
+    <button type="submit" [disabled]="!form.valid">Decode</button>
+  </form>
+  <div class="jsonViewerSection" *ngIf="status === 'success'">
+    <div class="iconCopied">
+      <label for="copied" *ngIf="isCopied">Copiado</label>
+      <img
+      src="../assets/clone.png"
+      alt="copy_value"
+      width="25"
+      height="25"
+      (click)="copyToClipboard()"
+    />
+    </div>
+    <ngx-json-viewer [json]="someObject" [expanded]="false"></ngx-json-viewer>
   </div>
-  <button type="submit" [disabled]="!form.valid">
-    Decode
-  </button>
-</form>
+</div>
