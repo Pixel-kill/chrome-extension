@@ -2,7 +2,7 @@
     "name": "Decode TDP",
     "version": "1.0.0",
     "description": "Decode encrypt data TDP",
-    "manifest_version": 1,
+    "manifest_version": 3,
     "author": "Carlos Vilca",
     "action": {
         "default_popup": "index.html",
